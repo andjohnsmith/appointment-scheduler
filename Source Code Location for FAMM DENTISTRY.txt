@@ -1,0 +1,2 @@
+All of the files in public and routes folders, except for the materialize styling library (materialize.min.js and materialize.css).
+All of the css styling in style.css is our original css scripting.
