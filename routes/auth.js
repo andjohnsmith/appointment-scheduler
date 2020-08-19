@@ -48,7 +48,11 @@ router.post(
       if (!user) {
         return res
           .status(400)
-          .json({ errors: [{ msg: 'Invalid Credentials' }] });
+          .json({ errors: [{ msg: 'Invalid credentials' }] });
+      } else if (!user.isEnabled) {
+        return res
+          .status(400)
+          .json({ errors: [{ msg: 'Account is disabled' }] });
       }
 
       const isMatch = await bcrypt.compare(password, user.password);
@@ -56,7 +60,7 @@ router.post(
       if (!isMatch) {
         return res
           .status(400)
-          .json({ errors: [{ msg: 'Invalid Credentials' }] });
+          .json({ errors: [{ msg: 'Invalid credentials' }] });
       }
 
       const payload = {
