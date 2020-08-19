@@ -1,22 +1,27 @@
 {
-  "name": "myapp",
-  "version": "0.0.0",
-  "private": true,
+  "name": "workout-booker",
+  "version": "1.0.0",
+  "description": "MERN stack app to schedule and manage workouts with a trainer.",
+  "main": "server.js",
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node server",
+    "server": "nodemon server",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
+  "author": "Andrew Smith",
+  "license": "MIT",
   "dependencies": {
-    "bcrypt": "^3.0.2",
-    "body-parser": "~1.18.2",
-    "cookie-parser": "~1.4.3",
-    "debug": "~2.6.9",
+    "bcryptjs": "^2.4.3",
+    "config": "^3.3.1",
     "express": "^4.17.1",
-    "express-session": "^1.15.6",
-    "mongodb": "^3.0.3",
-    "morgan": "^1.9.1",
-    "npm": "^5.7.1",
-    "pug": "^2.0.4",
-    "serve-favicon": "~2.4.5",
-    "uuid": "^3.2.1"
+    "express-validator": "^6.6.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.0"
+  },
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "nodemon": "^2.0.4"
   }
 }
