@@ -5,7 +5,7 @@ const auth = require('../middleware/auth');
 
 const User = require('../models/User');
 const Workout = require('../models/Workout');
-const checkObjectId = require('../../middleware/checkObjectId');
+const checkObjectId = require('../middleware/checkObjectId');
 
 // @route    GET /api/workouts
 // @desc     Retrieve workouts
@@ -95,3 +95,5 @@ router.put('/:id', [auth, checkObjectId('id')], async (req, res) => {
     res.status(500).send('Server Error');
   }
 });
+
+module.exports = router;
