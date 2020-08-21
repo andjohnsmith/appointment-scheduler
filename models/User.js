@@ -12,7 +12,7 @@ const UserSchema = new Schema(
       required: true,
     },
     interests: { type: [String], default: [] },
-    isEnabled: { type: Boolean, required: true, default: true },
+    isEnabled: { type: Boolean, default: true },
   },
   { timestamps: true },
 );

@@ -21,6 +21,7 @@ router.post(
       'password',
       'Please enter a password with 6 or more characters',
     ).isLength({ min: 6 }),
+    check('role', 'Role is required').not().isEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -28,7 +29,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
 
     try {
       let user = await User.findOne({ email });
@@ -43,6 +44,7 @@ router.post(
         name,
         email,
         password,
+        role,
       });
 
       const salt = await bcrypt.genSalt(10);
