@@ -6,52 +6,55 @@ import { logout } from '../../actions/auth';
 
 const Navbar = ({ auth: { isAuthenticated, isLoading }, logout }) => {
   const authLinks = (
-    <ul>
-      <li>
-        <Link to="/profiles">Developers</Link>
-      </li>
-      <li>
-        <Link to="/posts">Posts</Link>
-      </li>
-      <li>
-        <Link to="/dashboard">
-          <i className="fas fa-user" />{' '}
-          <span className="hide-sm">Dashboard</span>
+    <Fragment>
+      <div className="navbar-nav">
+        <Link to="/profiles" className="nav-link">
+          Trainers
         </Link>
-      </li>
-      <li>
-        <a onClick={logout} href="#!">
-          <i className="fas fa-sign-out-alt" />{' '}
-          <span className="hide-sm">Logout</span>
-        </a>
-      </li>
-    </ul>
+        <Link to="/workouts" className="nav-link">
+          Workouts
+        </Link>
+        <Link to="/dashboard" className="nav-link">
+          Dashboard
+        </Link>
+      </div>
+      <div className="ml-auto">
+        <button onClick={logout} className="btn btn-primary">
+          Logout
+        </button>
+      </div>
+    </Fragment>
   );
 
   const guestLinks = (
-    <ul>
-      <li>
-        <Link to="/profiles">Developers</Link>
-      </li>
-      <li>
-        <Link to="/register">Register</Link>
-      </li>
-      <li>
-        <Link to="/login">Login</Link>
-      </li>
-    </ul>
+    <div className="navbar-nav ml-auto">
+      <Link to="/profiles" className="nav-link">
+        Trainers
+      </Link>
+      <Link to="/register" className="nav-link">
+        Register
+      </Link>
+      <Link to="/login" className="nav-link">
+        Login
+      </Link>
+    </div>
   );
 
   return (
-    <nav className="navbar bg-dark">
-      <h1>
-        <Link to="/">
-          <i className="fas fa-code" /> DevConnector
+    <nav className="navbar navbar-expand-md navbar-light bg-light">
+      <div className="container">
+        <Link className="navbar-brand" to="/">
+          Bookit
         </Link>
-      </h1>
-      {!isLoading && (
-        <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
-      )}
+        <button className="navbar-toggler" type="button">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        {!isLoading && (
+          <div className="collapse navbar-collapse">
+            {isAuthenticated ? authLinks : guestLinks}
+          </div>
+        )}
+      </div>
     </nav>
   );
 };

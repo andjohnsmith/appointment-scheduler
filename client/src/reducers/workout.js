@@ -4,7 +4,6 @@ import {
   DELETE_WORKOUT,
   ADD_WORKOUT,
   GET_WORKOUT,
-  EDIT_WORKOUT,
 } from '../actions/types';
 
 const initialState = {

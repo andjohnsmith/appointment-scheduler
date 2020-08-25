@@ -1,8 +1,7 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Navbar from '../layout/Navbar';
 import Spinner from '../layout/Spinner';
 
 const PrivateRoute = ({
@@ -16,10 +15,7 @@ const PrivateRoute = ({
       isLoading ? (
         <Spinner />
       ) : isAuthenticated ? (
-        <Fragment>
-          <Navbar />
-          <Component {...props} />
-        </Fragment>
+        <Component {...props} />
       ) : (
         <Redirect to="/login" />
       )
