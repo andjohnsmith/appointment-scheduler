@@ -6,7 +6,6 @@ import {
   DELETE_WORKOUT,
   ADD_WORKOUT,
   GET_WORKOUT,
-  EDIT_WORKOUT,
 } from '../actions/types';
 
 export const getWorkouts = () => async (dispatch) => {
@@ -72,7 +71,7 @@ export const addWorkout = (formData, history) => async (dispatch) => {
 
 export const deleteWorkout = (id) => async (dispatch) => {
   try {
-    const res = await api.delete(`/workouts/${id}`);
+    await api.delete(`/workouts/${id}`);
 
     dispatch({
       type: DELETE_WORKOUT,

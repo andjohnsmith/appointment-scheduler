@@ -5,6 +5,7 @@ import Login from '../auth/Login';
 import Alert from '../layout/Alert';
 import Dashboard from '../dashboard/Dashboard';
 import PrivateRoute from '../routing/PrivateRoute';
+import AddWorkout from '../workouts/AddWorkout';
 
 const Routes = (props) => {
   return (
@@ -14,6 +15,7 @@ const Routes = (props) => {
         <Route exact path="/register" component={Register} />
         <Route exact path="/login" component={Login} />
         <PrivateRoute exact path="/dashboard" component={Dashboard} />
+        <PrivateRoute exact path="/add-workout" component={AddWorkout} />
       </Switch>
     </section>
   );

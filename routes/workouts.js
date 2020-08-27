@@ -13,9 +13,21 @@ const checkObjectId = require('../middleware/checkObjectId');
 router.get('/', auth, async (req, res) => {
   try {
     let workouts;
-    const user = await User.findById(req.user.id).select(-password);
+    const user = await User.findById(req.user.id); /*.select(-password)*/
 
-    if (user.role === 'Admin') {
+    if (req.query.date !== null) {
+      // workouts = all workouts with the given date
+      workouts = await Workout.find();
+
+      workouts = workouts.filter(
+        (workout) => workout.startDate.toDateString() === req.query.date,
+      );
+
+      if (workouts.length === 0) {
+        console.log('No appointments for ' + req.query.date);
+        workouts.push(-1);
+      }
+    } else if (user.role === 'Admin') {
       workouts = await Workout.find().sort({ startDate: -1 });
     } else if (user.role === 'Trainer') {
       workouts = await Workout.find({ trainer: req.user.id }).sort({
@@ -58,11 +70,11 @@ router.get('/:id', [auth, checkObjectId('id')], async (req, res) => {
 router.post('/', auth, async (req, res) => {
   try {
     const newWorkout = new Workout({
-      type: req.body.type,
+      // type: req.body.type,
       startDate: req.body.startDate,
-      endDate: req.body.endDate,
+      // endDate: req.body.endDate,
       athlete: req.user.id,
-      trainer: req.body.trainer,
+      // trainer: req.body.trainer,
     });
 
     const workout = await newWorkout.save();

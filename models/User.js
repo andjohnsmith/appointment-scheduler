@@ -11,7 +11,6 @@ const UserSchema = new Schema(
       enum: ['Athlete', 'Trainer', 'Admin'],
       required: true,
     },
-    interests: { type: [String], default: [] },
     isEnabled: { type: Boolean, default: true },
   },
   { timestamps: true },
