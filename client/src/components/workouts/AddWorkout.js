@@ -1,10 +1,12 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Calendar from 'react-calendar';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import api from '../../utils/api';
 import { addWorkout } from '../../actions/workout';
+
+import 'react-calendar/dist/Calendar.css';
 
 const AddWorkout = ({ addWorkout, history }) => {
   const [date, setDate] = useState(new Date());
@@ -23,46 +25,53 @@ const AddWorkout = ({ addWorkout, history }) => {
     18: true,
   });
 
-  const getTimes = async () => {
-    console.log('current date: ' + date.toDateString());
+  useEffect(() => {
+    const fetchTimes = async () => {
+      try {
+        const res = await api.get(`/workouts?date=${date.toDateString()}`);
+        const newOpenTimes = {
+          7: true,
+          8: true,
+          9: true,
+          10: true,
+          11: true,
+          12: true,
+          13: true,
+          14: true,
+          15: true,
+          16: true,
+          17: true,
+          18: true,
+        };
 
-    // search workouts with date
-    try {
-      const res = await api.get(`/workouts?date=${date.toDateString()}`);
+        if (res.data[0] !== -1) {
+          const workouts = res.data;
 
-      if (res.data[0] === -1) {
-        // all time slots are open
-        return;
+          for (const workout in workouts) {
+            const startDate = new Date(workouts[workout].startDate);
+
+            newOpenTimes[startDate.getHours()] = false;
+          }
+        }
+
+        setOpenTimes(newOpenTimes);
+      } catch (err) {
+        console.log(err.response.statusText);
       }
+    };
 
-      const workouts = res.data;
-      console.log('going through data');
-      for (const workout in workouts) {
-        const startDate = new Date(workouts[workout].startDate);
-        console.log('time: ' + startDate.getHours());
-        setOpenTimes({
-          ...openTimes,
-          [startDate.getHours()]: false,
-        });
-      }
-    } catch (err) {
-      console.log(err.response.statusText);
-    }
-  };
+    fetchTimes();
+  }, [date]);
 
   const submit = (time) => {
-    setDate(date.setHours(time));
-    addWorkout({ startDate: date }, history);
+    addWorkout({ startDate: date.setHours(time) }, history);
   };
 
   return (
     <Fragment>
       <h1>Add a Workout</h1>
       <div>
-        <Calendar value={date} onChange={setDate} />
-        <button type="button" onClick={getTimes}>
-          Search Times
-        </button>
+        <Calendar value={date} onChange={setDate} minDate={new Date()} />
       </div>
 
       <h2>Available Workouts</h2>
@@ -73,7 +82,7 @@ const AddWorkout = ({ addWorkout, history }) => {
             <button onClick={() => submit(time)}>Add</button>
           </div>
         ) : (
-          <span key={time}>{time} is taken</span>
+          <div key={time}>{time} is taken</div>
         ),
       )}
 

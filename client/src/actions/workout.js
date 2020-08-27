@@ -47,6 +47,7 @@ export const getWorkout = (id) => async (dispatch) => {
 };
 
 export const addWorkout = (formData, history) => async (dispatch) => {
+  console.log('adding');
   try {
     const res = await api.post('/workouts', formData);
 
