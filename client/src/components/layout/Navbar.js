@@ -8,14 +8,14 @@ const Navbar = ({ auth: { isAuthenticated, isLoading }, logout }) => {
   const authLinks = (
     <Fragment>
       <div className="navbar-nav">
-        <Link to="/profiles" className="nav-link">
-          Trainers
+        <Link to="/dashboard" className="nav-link">
+          Dashboard
         </Link>
         <Link to="/workouts" className="nav-link">
           Workouts
         </Link>
-        <Link to="/dashboard" className="nav-link">
-          Dashboard
+        <Link to="/trainers" className="nav-link">
+          Trainers
         </Link>
       </div>
       <div className="ml-auto">
@@ -27,8 +27,8 @@ const Navbar = ({ auth: { isAuthenticated, isLoading }, logout }) => {
   );
 
   const guestLinks = (
-    <div className="navbar-nav ml-auto">
-      <Link to="/profiles" className="nav-link">
+    <div className="navbar-nav mr-auto">
+      <Link to="/trainers" className="nav-link">
         Trainers
       </Link>
       <Link to="/register" className="nav-link">
@@ -44,7 +44,7 @@ const Navbar = ({ auth: { isAuthenticated, isLoading }, logout }) => {
     <nav className="navbar navbar-expand-md navbar-light bg-light">
       <div className="container">
         <Link className="navbar-brand" to="/">
-          Bookit
+          Trainr
         </Link>
         <button className="navbar-toggler" type="button">
           <span className="navbar-toggler-icon"></span>

@@ -15,7 +15,7 @@ router.get('/', auth, async (req, res) => {
     let workouts;
     const user = await User.findById(req.user.id); /*.select(-password)*/
 
-    if (req.query.date !== null) {
+    if (req.query.date) {
       // workouts = all workouts with the given date
       workouts = await Workout.find();
 
@@ -28,14 +28,14 @@ router.get('/', auth, async (req, res) => {
         workouts.push(-1);
       }
     } else if (user.role === 'Admin') {
-      workouts = await Workout.find().sort({ startDate: -1 });
+      workouts = await Workout.find().sort({ startDate: 1 });
     } else if (user.role === 'Trainer') {
       workouts = await Workout.find({ trainer: req.user.id }).sort({
-        startDate: -1,
+        startDate: 1,
       });
     } else {
       workouts = await Workout.find({ athlete: req.user.id }).sort({
-        startDate: -1,
+        startDate: 1,
       });
     }
 

@@ -9,7 +9,7 @@ const UserSchema = new Schema(
     role: {
       type: String,
       enum: ['Athlete', 'Trainer', 'Admin'],
-      required: true,
+      default: 'Athlete',
     },
     isEnabled: { type: Boolean, default: true },
   },

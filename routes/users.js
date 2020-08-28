@@ -8,6 +8,26 @@ const { check, validationResult } = require('express-validator');
 const User = require('../models/User');
 
 /**
+ * @route   GET /api/users
+ * @desc    Retrieve users
+ * @access  Public
+ */
+router.get('/', async (req, res) => {
+  try {
+    let users = await User.find();
+
+    if (req.query.role) {
+      users = users.filter((user) => user.role === req.query.role);
+    }
+
+    res.json(users);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
+/**
  * @route   POST /api/users
  * @desc    Register a new user
  * @access  Public
@@ -21,7 +41,6 @@ router.post(
       'password',
       'Please enter a password with 6 or more characters',
     ).isLength({ min: 6 }),
-    check('role', 'Role is required').not().isEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req);

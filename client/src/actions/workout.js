@@ -47,7 +47,6 @@ export const getWorkout = (id) => async (dispatch) => {
 };
 
 export const addWorkout = (formData, history) => async (dispatch) => {
-  console.log('adding');
   try {
     const res = await api.post('/workouts', formData);
 
@@ -58,7 +57,7 @@ export const addWorkout = (formData, history) => async (dispatch) => {
 
     dispatch(setAlert('Workout Created', 'success'));
 
-    history.push('/dashboard');
+    history.push('/workouts');
   } catch (err) {
     dispatch({
       type: WORKOUT_ERROR,

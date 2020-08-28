@@ -1,28 +1,46 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { getWorkouts } from '../../actions/workout';
+import WorkoutTable from '../workouts/WorkoutTable';
 
-const Dashboard = ({ auth: { user }, workout: { workouts } }) => {
+const Dashboard = ({ getWorkouts, auth: { user }, workout: { workouts } }) => {
+  useEffect(() => {
+    getWorkouts();
+  }, [getWorkouts]);
+
   return (
     <Fragment>
-      <h1>Dashboard</h1>
-      <p className="lead">Welcome {user && user.name}</p>
+      <div className="jumbotron jumbotron-fluid mt-4">
+        <div className="container">
+          <h1 className="display-4">Your Dashboard</h1>
+          <p className="lead">Welcome, {user && user.name}</p>
+        </div>
+      </div>
 
-      <h2>Upcoming Appointments</h2>
-      {workouts.length !== 0 ? (
-        workouts.forEach((workout) => <div>{workout.type}</div>)
-      ) : (
-        <div>You haven't scheduled anything yet!</div>
-      )}
-      <Link to="/add-workout" className="btn btn-primary">
-        Schedule
-      </Link>
+      <div className="row mb-2">
+        <div className="col">
+          <span className="h2">Upcoming Workouts</span>
+        </div>
+        <div className="col">
+          <Link to="/workouts" className="btn btn-secondary">
+            See all
+          </Link>
+        </div>
+        <div className="col">
+          <Link to="/add-workout" className="btn btn-primary">
+            Add
+          </Link>
+        </div>
+      </div>
+      <WorkoutTable workouts={workouts} />
     </Fragment>
   );
 };
 
 Dashboard.propTypes = {
+  getWorkouts: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   workout: PropTypes.object.isRequired,
 };
@@ -32,4 +50,4 @@ const mapStateToProps = (state) => ({
   workout: state.workout,
 });
 
-export default connect(mapStateToProps)(Dashboard);
+export default connect(mapStateToProps, { getWorkouts })(Dashboard);
