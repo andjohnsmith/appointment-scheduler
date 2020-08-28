@@ -64,6 +64,20 @@ router.get('/:id', [auth, checkObjectId('id')], async (req, res) => {
   }
 });
 
+// @route    DELETE /api/workouts/:id
+// @desc     Delete a workout
+// @access   Private
+router.delete('/:id', [auth, checkObjectId('id')], async (req, res) => {
+  try {
+    await Workout.findOneAndRemove(req.params.id);
+
+    res.json({ msg: 'Workout deleted' });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
 // @route    POST /api/workouts
 // @desc     Create a workout
 // @access   Private
