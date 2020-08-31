@@ -9,20 +9,22 @@ const Landing = ({ isAuthenticated }) => {
   }
 
   return (
-    <section>
-      <div>
-        <h1 className="x-large">Workout Scheduler</h1>
-        <p className="lead">Schedule a workout</p>
-        <div className="buttons">
-          <Link to="/register" className="btn btn-primary">
-            Sign Up
-          </Link>
-          <Link to="/login" className="btn btn-light">
-            Login
-          </Link>
-        </div>
-      </div>
-    </section>
+    <main role="main" className="inner cover">
+      <h1>Schedule a workout. Easy.</h1>
+      <p className="lead">
+        Open up the calendar and find the soonest available workout session, or
+        pick out a time in the future. It's easy, and you always know who your
+        trainer is.
+      </p>
+      <p className="lead">
+        <Link to="/register" className="btn btn-lg btn-secondary mr-2">
+          Register
+        </Link>
+        <Link to="/login" className="btn btn-lg btn-secondary">
+          Login
+        </Link>
+      </p>
+    </main>
   );
 };
 
